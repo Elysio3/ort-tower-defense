@@ -314,6 +314,7 @@ public class Game implements Runnable
     	// Place towers if user chooses
     	this.placeBlackHoles();
     	this.placeSuns();
+        this.placeMissile();
     	
     	if(livesCounter <= 0)
     	{	gameIsOver = true;
@@ -408,7 +409,7 @@ public class Game implements Runnable
         g.fillRect(650, 550, 100, 100);
                 
         // draw tower missile in menu area
-        Missile missile = new Missile(new Coordinate(700, 600));
+        Missile missile = new Missile(new Coordinate(700, 615));
         missile.draw(g);
         
         // draw box around sun icon
@@ -424,8 +425,8 @@ public class Game implements Runnable
         	newBlackHole.draw(g);
 
        // draws Missile Towers object with mouse movements
-        if(missile != null)
-         missile.draw(g);
+        if(newMissile != null)
+            newMissile.draw(g);
     
 
         // draws sun object with mouse movements

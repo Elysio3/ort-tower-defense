@@ -19,8 +19,8 @@ public class Missile extends Tower {
         ImageLoader loader = ImageLoader.getLoader();
         this.tower = loader.getImage("MissileTOWER.png");
         this.position = pos;
-        this.anchorX = -40;
-        this.anchorY = -40;
+        this.anchorX = -65;
+        this.anchorY = -65;
     }
 
     /**
