@@ -1,4 +1,7 @@
-package game;
+package game.utilities;
+
+import game.Game;
+import game.utilities.Coordinate;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

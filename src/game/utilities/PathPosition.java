@@ -1,4 +1,6 @@
-package game;
+package game.utilities;
+
+import game.utilities.Coordinate;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class PathPosition
 	 * 
 	 * @param path
 	 */
-	PathPosition(List<Coordinate> points)
+	public PathPosition(List<Coordinate> points)
 	{	// Initializes variables
 		
 		this.segment = 0;		//starting segment

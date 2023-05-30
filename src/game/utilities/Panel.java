@@ -1,4 +1,4 @@
-package game;
+package game.utilities;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

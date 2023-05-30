@@ -1,4 +1,10 @@
-package game;
+package game.entities.towers;
+
+import game.Game;
+import game.effects.SunSpot;
+import game.utilities.Coordinate;
+import game.entities.ennemies.Enemy;
+import game.utilities.ImageLoader;
 
 import java.util.List;
 

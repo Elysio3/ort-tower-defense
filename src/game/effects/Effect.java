@@ -1,4 +1,7 @@
-package game;
+package game.effects;
+
+import game.entities.ennemies.Enemy;
+import game.Game;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,16 +11,14 @@ import java.util.List;
 /**
  * Abstract class which all Effects will inherit from
  */
-abstract public class Effect 
-{
+abstract public class Effect {
 	/* Fields */
 	protected int posX, posY;
 	protected double velocityX, velocityY;
 	protected double ageInSeconds;
 	protected Image picture;
 	
-	public void interact(Game game, double deltaTime)
-	{
+	public void interact(Game game, double deltaTime) {
 		// Increments time
 		ageInSeconds += deltaTime;
 		
@@ -27,14 +28,13 @@ abstract public class Effect
 		
 		// see if stardust hit enemy
 		List<Enemy> enemies = game.enemies;
-		for(Enemy e: new LinkedList<Enemy>(enemies))
-		{
+		for(Enemy e: new LinkedList<Enemy>(enemies)) {
 			// Compute distance of enemy to effect
 			double dx, dy, dist;	// change in x, y, and total distance
 			
 			// calculates change in x and y position 
-			dx = e.position.getCoordinate().x - posX; // x position of enemy - effect 
-			dy = e.position.getCoordinate().y - posY; // y position of enemy - effect 
+			dx = e.getPosition().getCoordinate().x - posX; // x position of enemy - effect
+			dy = e.getPosition().getCoordinate().y - posY; // y position of enemy - effect
 			
 			// use Pythagorean theorem to calculate distance
 			dist = Math.sqrt((dx*dx) + (dy*dy));

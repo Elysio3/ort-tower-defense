@@ -1,4 +1,7 @@
-package game;
+package game.entities.ennemies;
+
+import game.utilities.PathPosition;
+import game.utilities.Coordinate;
 
 import java.awt.Graphics;
 import java.awt.Image;

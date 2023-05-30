@@ -1,5 +1,15 @@
 package game;
 
+import game.effects.Effect;
+import game.entities.towers.Sun;
+import game.entities.towers.Tower;
+import game.utilities.*;
+import game.entities.ennemies.Alien;
+import game.entities.ennemies.Asteroid;
+import game.entities.ennemies.Comet;
+import game.entities.ennemies.Enemy;
+import game.entities.towers.BlackHole;
+
 import java.awt.*;
 import java.io.InputStream;
 import java.util.LinkedList;
@@ -59,7 +69,7 @@ public class Game implements Runnable
     private Image backdrop;				// background star image		
     private PathPoints line;			// path coordinates
     
-    private GamePanel gamePanel;		// gamePanel object 
+    private GamePanel gamePanel;		// gamePanel object
     private GameState state;	   		// The current game state
     
     private int frameCounter;			// keeps track of frame updates
@@ -75,17 +85,17 @@ public class Game implements Runnable
     private boolean gameIsWon;			// indicates if game is won
     
     int livesCounter; 					// counter for lives left
-    int scoreCounter;					// points the user earns
-    int killsCounter;					// number of enemies destroyed
+    public int scoreCounter;					// points the user earns
+    public int killsCounter;					// number of enemies destroyed
     
     /* create enemies */
-    List<Enemy> enemies;				// list of enemy objects
+    public List<Enemy> enemies;				// list of enemy objects
     
     /* create towers */
     List<Tower> towers;					// list of tower objects
     
     /* create effects */
-    List<Effect> effects;				// list of effect objects
+    public List<Effect> effects;				// list of effect objects
     
     // You will declare other variables here.  These variables will last for
     //   the lifetime of the game, so don't store temporary values or loop counters

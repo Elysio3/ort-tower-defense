@@ -1,17 +1,21 @@
-package game;
+package game.entities.towers;
+
+import game.*;
+import game.utilities.Coordinate;
+import game.entities.ennemies.Enemy;
+import game.utilities.ImageLoader;
+import game.effects.StarDust;
 
 import java.util.List;
 
 /**
  * This class creates a single blackhole tower
  */
-public class BlackHole extends Tower
-{
+public class BlackHole extends Tower {
 	/**
 	 * Constructor
 	 */
-	public BlackHole(Coordinate pos)
-	{
+	public BlackHole(Coordinate pos) {
 		ImageLoader loader = ImageLoader.getLoader();
 		this.tower = loader.getImage("resources/blackhole.png");
 		this.position = pos;

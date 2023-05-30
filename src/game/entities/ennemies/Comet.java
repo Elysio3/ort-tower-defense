@@ -1,15 +1,16 @@
-package game;
+package game.entities.ennemies;
+
+import game.utilities.ImageLoader;
+import game.utilities.PathPosition;
 
 /**
  * This class creates a single comet enemy
  */
-public class Comet extends Enemy
-{
+public class Comet extends Enemy {
 	/**
 	 * Constructor
 	 */
-	Comet(PathPosition p)
-	{
+	public Comet(PathPosition p) {
 		ImageLoader loader = ImageLoader.getLoader();
 		this.enemy = loader.getImage("resources/comet.png");
 		this.position = p;

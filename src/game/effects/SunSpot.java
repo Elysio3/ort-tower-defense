@@ -1,9 +1,12 @@
-package game;
+package game.effects;
+
+import game.utilities.Coordinate;
+import game.utilities.ImageLoader;
 
 /**
  * Game effect when the Black hole attacks 
  */
-public class SunSpot extends Effect 
+public class SunSpot extends Effect
 {
 	public SunSpot(Coordinate pos, Coordinate target)
 	{
