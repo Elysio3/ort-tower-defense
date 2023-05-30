@@ -1,25 +1,23 @@
-package game.entities.towers;
+package entities.towers;
 
 import game.Game;
-import game.effects.SunSpot;
-import game.utilities.Coordinate;
-import game.entities.ennemies.Enemy;
-import game.utilities.ImageLoader;
+import effects.SunSpot;
+import utilities.Coordinate;
+import entities.ennemies.Enemy;
+import utilities.ImageLoader;
 
 import java.util.List;
 
 /**
  * This class creates a single sun tower
  */
-public class Sun extends Tower
-{
+public class Sun extends Tower {
 	/**
 	 * Constructor
 	 */
-	public Sun(Coordinate pos)
-	{
+	public Sun(Coordinate pos) {
 		ImageLoader loader = ImageLoader.getLoader();
-		this.tower = loader.getImage("resources/sun.png");
+		this.tower = loader.getImage("/main/resources/sun.png");
 		this.position = pos;
 		this.anchorX = -50;
 		this.anchorY = -50;
@@ -28,8 +26,7 @@ public class Sun extends Tower
 	/**
 	 * 
 	 */
-	public void interact(Game game, double deltaTime)
-	{
+	public void interact(Game game, double deltaTime) {
 		
 		List<Enemy> enemies = game.enemies; // new list of enemies
 		

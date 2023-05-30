@@ -1,8 +1,8 @@
-package game.effects;
+package effects;
 
-import game.entities.ennemies.Enemy;
+import entities.ennemies.Enemy;
+
 import game.Game;
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.LinkedList;

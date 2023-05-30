@@ -1,10 +1,10 @@
-package game.entities.towers;
+package entities.towers;
 
-import game.*;
-import game.utilities.Coordinate;
-import game.entities.ennemies.Enemy;
-import game.utilities.ImageLoader;
-import game.effects.StarDust;
+import game.Game;
+import utilities.Coordinate;
+import entities.ennemies.Enemy;
+import utilities.ImageLoader;
+import effects.StarDust;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class BlackHole extends Tower {
 	 */
 	public BlackHole(Coordinate pos) {
 		ImageLoader loader = ImageLoader.getLoader();
-		this.tower = loader.getImage("resources/blackhole.png");
+		this.tower = loader.getImage("/main/resources/blackhole.png");
 		this.position = pos;
 		this.anchorX = -40;
 		this.anchorY = -40;
@@ -26,8 +26,7 @@ public class BlackHole extends Tower {
 	/**
 	 * 
 	 */
-	public void interact(Game game, double deltaTime)
-	{	// tracks time that effect has existed
+	public void interact(Game game, double deltaTime) {	// tracks time that effect has existed
 		timeSinceLastFire += deltaTime;
 		
 		// if time less than 1.5 seconds, don't interact

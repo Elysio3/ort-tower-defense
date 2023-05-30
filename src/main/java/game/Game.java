@@ -1,3 +1,5 @@
+package game;
+
 import effects.Effect;
 import entities.towers.Sun;
 import entities.towers.Tower;
@@ -20,7 +22,7 @@ import javax.swing.JOptionPane;
 
 /**
  * This 'enum' just creates a new type of data (like int or char).
- * The type is 'GameState', and the legal values are shown below.
+ * The type is 'game.GameState', and the legal values are shown below.
  * We can create variables of this type, and we can store the 
  * values shown below into those variables.
  * 
@@ -185,20 +187,19 @@ public class Game implements Runnable
      * This setup function is called when the game is in the UPDATE state.
      * It just sets up a game, then enters any valid game state.
      */
-    private void doSetupStuff ()
-    {
+    private void doSetupStuff () {
         // Do setup tasks
         // Create the JFrame and the JPanel
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        f.setTitle("Basil Vetas's Tower Defense Game");
+        f.setTitle("Basil Vetas's Tower Defense game.Game");
         f.setContentPane(gamePanel);
         f.pack();
         f.setVisible(true); 
         
     	// creates a new ImageLoader object and loads the background image
 		ImageLoader loader = ImageLoader.getLoader();
-        backdrop = loader.getImage("resources/stars.jpg");
+        backdrop = loader.getImage("");
         
         JOptionPane.showMessageDialog(null,  "Rules of the game:\n" +
         		"1. Place towers on the map to stop enemies from reaching the Earth.\n" +
@@ -218,7 +219,7 @@ public class Game implements Runnable
         // Use the loader to build a scanner on the path data text file, then build the 
         // path points object from the data in the file.
 		ClassLoader myLoader = this.getClass().getClassLoader();
-        InputStream pointStream = myLoader.getResourceAsStream("resources/path_1.txt");
+        InputStream pointStream = myLoader.getResourceAsStream("/main/resources/path_1.txt");
         Scanner s = new Scanner (pointStream);
         line  = new PathPoints(s);
 
@@ -253,8 +254,7 @@ public class Game implements Runnable
      * (It could also add new enemies, detect collisions, etc.)  This
      * function is responsible for the 'physics' of the game.
      */
-    private void doUpdateTasks()
-    {	
+    private void doUpdateTasks() {
     	if(gameIsOver)
     	{	state = GameState.DRAW;
     		return;
@@ -332,8 +332,7 @@ public class Game implements Runnable
      * 
      * @param g a valid graphics object.
      */
-    public void draw(Graphics g)
-    {
+    public void draw(Graphics g) {
         // If we're not in the DRAW state, do not draw!
         
         if (state != GameState.DRAW)
@@ -414,7 +413,7 @@ public class Game implements Runnable
         	newSun.draw(g);
         
         ImageLoader loader = ImageLoader.getLoader();	
-		Image endGame = loader.getImage("resources/game_over.png"); // load game over image
+		Image endGame = loader.getImage("/main/resources/game_over.png"); // load game over image
     	
         if(livesCounter <= 0)										// if game is lost
         	g.drawImage(endGame, 0, 0, null);						// draw "game over"
@@ -434,10 +433,9 @@ public class Game implements Runnable
      * Generates a stream of enemies
      * 
      */
-    public void generateEnemies()
-    {	
+    public void generateEnemies() {
     	// adds enemies to list dependent on how many frames have passed
-    	if(frameCounter % 30 == 0)								// slow 
+    	if(frameCounter % 30 == 0)								// slow
     	{
     		enemies.add(new Asteroid(line.getStart()));
     	}
@@ -472,8 +470,7 @@ public class Game implements Runnable
     /**
      * Method for placing black holes on the screen
      */
-    public void placeBlackHoles()
-    {
+    public void placeBlackHoles() {
     	/* I need to make it so you can't place towers on path or off the screen */
     	
     	 // variable to hold mouse location
@@ -509,8 +506,7 @@ public class Game implements Runnable
     /**
      * Method for placing suns on the screen
      */
-    public void placeSuns()
-    {
+    public void placeSuns() {
     	/* I need to make it so you can't place towers on path or off the screen */
     	
     	 // variable to hold mouse location

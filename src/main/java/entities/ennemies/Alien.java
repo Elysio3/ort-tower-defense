@@ -1,7 +1,8 @@
-package game.entities.ennemies;
+package entities.ennemies;
 
-import game.utilities.ImageLoader;
-import game.utilities.PathPosition;
+import utilities.ImageLoader;
+import utilities.PathPosition;
+
 
 /**
  * This class creates a single alien enemy
@@ -12,7 +13,7 @@ public class Alien extends Enemy {
 	 */
 	public Alien(PathPosition p) {
 		ImageLoader loader = ImageLoader.getLoader();
-		this.enemy = loader.getImage("resources/Alien-Ship.png");
+		this.enemy = loader.getImage("/main/resources/Alien-Ship.png");
 		this.position = p;
 		this.anchorX = -20;
 		this.anchorY = -20;

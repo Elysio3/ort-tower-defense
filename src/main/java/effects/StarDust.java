@@ -1,18 +1,18 @@
-package game.effects;
+package effects;
 
-import game.utilities.Coordinate;
-import game.utilities.ImageLoader;
+import utilities.Coordinate;
+import utilities.ImageLoader;
+
 
 /**
- * Game effect when the Black hole attacks 
+ * game.Game effect when the Black hole attacks
  */
 public class StarDust extends Effect
 {
-	public StarDust(Coordinate pos, Coordinate target)
-	{
+	public StarDust(Coordinate pos, Coordinate target) {
 		// Loads star dust image
 		ImageLoader loader = ImageLoader.getLoader();
-		this.picture = loader.getImage("resources/star_dust.png");
+		this.picture = loader.getImage("/main/resources/star_dust.png");
 		
 		// X and Y position of Effect
 		this.posX = pos.x;

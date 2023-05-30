@@ -1,4 +1,4 @@
-package game.utilities;
+package utilities;
 /**
 * A simple class for representing x, y coordinates.  Note
 * that the fields are not private.  This allows you to

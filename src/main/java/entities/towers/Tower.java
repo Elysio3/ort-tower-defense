@@ -1,10 +1,11 @@
-package game.entities.towers;
+package entities.towers;
 
 import game.Game;
-import game.utilities.Coordinate;
+import utilities.Coordinate;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.net.MalformedURLException;
 
 /**
  * This is an abstract superclass for a tower in the game

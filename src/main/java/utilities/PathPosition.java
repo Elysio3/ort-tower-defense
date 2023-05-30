@@ -1,6 +1,6 @@
-package game.utilities;
+package utilities;
 
-import game.utilities.Coordinate;
+import utilities.Coordinate;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class PathPosition
 	/**
 	 * Constructor:  Sets up this path position to be at the start
 	 * 
-	 * @param path
+	 * @param points
 	 */
 	public PathPosition(List<Coordinate> points)
 	{	// Initializes variables

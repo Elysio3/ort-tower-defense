@@ -1,12 +1,15 @@
-package game.utilities;
+package utilities;
 
 import java.awt.Image;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
+
 
 public class ImageLoader 
 {
@@ -14,8 +17,6 @@ public class ImageLoader
 	private static ImageLoader instance;
 	/**
 	 *  Constructor to initialize imageBank variable
-	 *  
-	 * @param null
 	 */
 	private ImageLoader()
 	{
@@ -23,9 +24,6 @@ public class ImageLoader
 	}
 	
 	/**
-	 * 
-	 * 
-	 * @param null
 	 * @return image loader
 	 */
 	public static ImageLoader getLoader()
@@ -34,23 +32,23 @@ public class ImageLoader
 			instance = new ImageLoader();
 		return instance;	// gets the image loader object
 	}
+
+
+
 	
 	/**
 	 * 
 	 * @param pic
 	 * @return Image
 	 */
-	public Image getImage(String pic)
-	{	
+	public Image getImage(String pic) {
 		Image loaded = null;
-		
+
 		// Prevents and image from being loaded twice
 		if(imageBank.containsKey(pic))	// if image is already in the map	
 			return imageBank.get(pic);	// return that image
-		else
-		{
-			try
-			{
+		else {
+			try {
 	    		// Create a loader for accessing files stored in the resources package.
 				ClassLoader myLoader = this.getClass().getClassLoader();
 		        
