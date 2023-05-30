@@ -1,22 +1,29 @@
 package game;
 
 import effects.Effect;
-import entities.towers.Sun;
-import entities.towers.Tower;
-import utilities.*;
 import entities.ennemies.Alien;
 import entities.ennemies.Asteroid;
 import entities.ennemies.Comet;
 import entities.ennemies.Enemy;
 import entities.towers.BlackHole;
+import entities.towers.Sun;
+import entities.towers.Tower;
+import utilities.Coordinate;
+import utilities.GamePanel;
+import utilities.ImageLoader;
+import utilities.PathPoints;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.util.LinkedList;
-import java.util.Scanner;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import java.util.Objects;
+import java.util.Scanner;
+
+import static java.lang.Thread.sleep;
 
 /* The class begins below the enum. */
 
@@ -44,8 +51,7 @@ enum GameState { SETUP, UPDATE, DRAW, WAIT, END }
  * 
  * @author basilvetas
  */
-public class Game implements Runnable
-{
+public class Game implements Runnable {
     /* Static methods */
     
     /**
@@ -53,8 +59,7 @@ public class Game implements Runnable
      * 
      * @param args not used
      */
-    public static void main (String[] args)
-    {
+    public static void main (String[] args) {
         // Just create a game object.  The game constructor
         //   will do the rest of the work.
         
@@ -101,6 +106,8 @@ public class Game implements Runnable
     //   the lifetime of the game, so don't store temporary values or loop counters
     //   here.
 
+    public String difficulty;           // the difficulty of the game, set by user
+
     /**
      * Constructor:  Builds a thread of execution, then starts it
      * on 'this' object.  This extra thread of execution will be
@@ -127,27 +134,22 @@ public class Game implements Runnable
      * The entry point for the second thread of execution.  Our
      * game loop is entirely within this method.
      */
-    public void run ()
-    {
+    public void run () {
         // Loop forever, or until the user closes the game window,
         //   whichever comes first.  ;)
         
-        while (true)
-        {
+        while (true) {
             // Test our game state, and do the appropriate action.
             
-            if (state == GameState.SETUP)
-            {
+            if (state == GameState.SETUP) {
                 doSetupStuff();
             }
             
-            else if (state == GameState.UPDATE)
-            {
+            else if (state == GameState.UPDATE) {
                 doUpdateTasks();
             }
             
-            else if (state == GameState.DRAW)
-            {
+            else if (state == GameState.DRAW) {
                 // We don't actually force the drawing to happen.
                 //   Instead, we 'request' it of the panel.
                 
@@ -159,16 +161,15 @@ public class Game implements Runnable
                 //   I choose to sleep the current thread for a very short while (so that it
                 //   will be briefly inactive).
                 
-                try { Thread.sleep(5); } catch (Exception e) {}
+                try { sleep(5); } catch (Exception e) {}
                 
                 // Do not advance the state here.  The 'draw' method will advance the state after it draws.
             }
             
-            else if (state == GameState.WAIT)
-            {
+            else if (state == GameState.WAIT) {
                 // Wait 1/10th a second.  This code is not ideal, we'll explore a better way soon.
                 
-                try { Thread.sleep(100); } catch (Exception e) {}
+                try { sleep(100); } catch (Exception e) {}
                 
                 // Drawing is complete, waiting is complete.  It is time to move
                 //   the objects in the game again.  Re-enter the UPDATE state.
@@ -176,41 +177,69 @@ public class Game implements Runnable
                 state = GameState.UPDATE;
             }
             
-            else if (state == GameState.END)
-            {
+            else if (state == GameState.END) {
                 // Do cleanup if any.  (We don't need to do anything here yet.)
             }
         }
     }
-    
+
     /**
      * This setup function is called when the game is in the UPDATE state.
      * It just sets up a game, then enters any valid game state.
      */
     private void doSetupStuff () {
+
         // Do setup tasks
         // Create the JFrame and the JPanel
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        f.setTitle("Basil Vetas's Tower Defense game.Game");
+        f.setTitle("Basil Vetas's Tower Defense game");
         f.setContentPane(gamePanel);
         f.pack();
-        f.setVisible(true); 
+        f.setVisible(true);
         
     	// creates a new ImageLoader object and loads the background image
 		ImageLoader loader = ImageLoader.getLoader();
         backdrop = loader.getImage("stars.jpg");
-        
-        JOptionPane.showMessageDialog(null,  "Rules of the game:\n" +
-        		"1. Place towers on the map to stop enemies from reaching the Earth.\n" +
-        		"2. Black holes shoot star dust and are cheaper, Suns shoot sun spots and are faster.\n" +
-        		"3. You earn money for stopping enemies, but as the game progresses, new enemies attack.\n" +
-        		"4. If you stop 500 enemies you win, but if you lose 10 lives the game is over.");
-        
-        // fill counters
-        livesCounter = 10;		// gives the player 10 lives
-        scoreCounter = 200;		// give the user 500 points to begin
+
+        Object[] choixDifficultes={"FACILE","NORMAL","DIFFICILE"};
+        int choix = JOptionPane.showOptionDialog(
+                null,
+                "Rules of the game:\n" +
+                        "1. Place towers on the map to stop enemies from reaching the Earth.\n" +
+                        "2. Black holes shoot star dust and are cheaper, Suns shoot sun spots and are faster.\n" +
+                        "3. You earn money for stopping enemies, but as the game progresses, new enemies attack.\n" +
+                        "4. If you stop 500 enemies you win, but if you lose 10 lives the game is over.",
+                "Choisissez la difficulté",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, choixDifficultes, choixDifficultes[0]);
+
+        switch (choix) {
+            case 0:
+                difficulty = "FACILE";
+                scoreCounter = 400;		// give the user 400 points to begin
+                livesCounter = 20;		// gives the player 20 lives
+                break;
+            case 2:
+                difficulty = "DIFFICILE";
+                scoreCounter = 100;		// give the user 200 points to begin
+                livesCounter = 5;		// gives the player 10 lives
+                break;
+            default:
+                difficulty = "NORMAL";
+                scoreCounter = 200;		// give the user 100 points to begin
+                livesCounter = 10;		// gives the player 5 lives
+                break;
+        }
         killsCounter = 0;		// begin with 0 kills
+
+
+
+
+
+    // fill counters
+
         
         // Reset the frame counter and time 
         frameCounter = 0;
@@ -255,13 +284,13 @@ public class Game implements Runnable
      * function is responsible for the 'physics' of the game.
      */
     private void doUpdateTasks() {
-    	if(gameIsOver)
-    	{	state = GameState.DRAW;
+    	if(gameIsOver) {
+            state = GameState.DRAW;
     		return;
     	}
     	
-    	if(gameIsWon)
-    	{	state = GameState.DRAW;
+    	if(gameIsWon) {
+            state = GameState.DRAW;
     		return;
     	}
     	
@@ -273,22 +302,19 @@ public class Game implements Runnable
         /* I think my elapsed time may be wrong */
         
     	// for each tower, interact in this game
-    	for(Tower t: new LinkedList<Tower>(towers))
-    	{	
+    	for(Tower t: new LinkedList<Tower>(towers)) {
     		t.interact(this, elapsedTime);
     		
     	}
         // for each effect, interact in this game      
-    	for(Effect e: new LinkedList<Effect>(effects))
-    	{	
+    	for(Effect e: new LinkedList<Effect>(effects)) {
     		e.interact(this, elapsedTime);
     		if(e.isDone())
     			effects.remove(e);	// add to list that has reached the end	
     	}
     	
     	// Advance each enemy on the path.
-    	for(Enemy e: new LinkedList<Enemy>(enemies))
-    	{	
+    	for(Enemy e: new LinkedList<Enemy>(enemies)) {
     		e.advance();
      		if(e.getPosition().isAtTheEnd())
     		{
@@ -308,13 +334,16 @@ public class Game implements Runnable
     	this.placeBlackHoles();
     	this.placeSuns();
     	
-    	if(livesCounter <= 0)
-    	{	gameIsOver = true;
+    	if(livesCounter <= 0) {
+            //gameIsOver = true;
     		livesCounter = 0;
     	}
     	
-    	if(killsCounter >= 500)
-    	{	gameIsWon = true;
+    	if((Objects.equals(difficulty, "EASY") && killsCounter >= 250) ||
+                (Objects.equals(difficulty, "NORMAL") && killsCounter >= 500) ||
+                (Objects.equals(difficulty, "HARD") && killsCounter >= 1000)) {
+            System.out.printf("partie gagnée");
+            gameIsWon = true;
     		killsCounter = 500;
     	}
     	
@@ -418,8 +447,8 @@ public class Game implements Runnable
         if(livesCounter <= 0)										// if game is lost
         	g.drawImage(endGame, 0, 0, null);						// draw "game over"
 
-		if(killsCounter >= 500)										// if game is lost
-		{	g.setFont(new Font("Braggadocio", Font.ITALIC, 90));		
+		if(killsCounter >= 500) {								    // if game is lost
+            g.setFont(new Font("Braggadocio", Font.ITALIC, 90));
         	g.drawString("You Win!!!", 10, 250);					// draw "game over"
 		}
 		
@@ -435,32 +464,26 @@ public class Game implements Runnable
      */
     public void generateEnemies() {
     	// adds enemies to list dependent on how many frames have passed
-    	if(frameCounter % 30 == 0)								// slow
-    	{
+    	if(frameCounter % 30 == 0) {							    // slow
     		enemies.add(new Asteroid(line.getStart()));
     	}
- 		else if(frameCounter % 25 == 0 && frameCounter >= 50)	// slow
- 		{
+ 		else if(frameCounter % 25 == 0 && frameCounter >= 50) {	    // slow
  			enemies.add(new Asteroid(line.getStart())); 
  		}
-	 	else if(frameCounter % 20 == 0 && frameCounter >= 100)	// medium
-	 	{
+	 	else if(frameCounter % 20 == 0 && frameCounter >= 100) {    // medium
 	 		enemies.add(new Asteroid(line.getStart())); 
 	 		enemies.add(new Alien(line.getStart()));
 	 	}	
- 		else if(frameCounter % 15 == 0 && frameCounter >= 150)	// medium
- 		{
+ 		else if(frameCounter % 15 == 0 && frameCounter >= 150) {	// medium
  			enemies.add(new Asteroid(line.getStart())); 
  			enemies.add(new Alien(line.getStart()));
  		}
-	 	else if(frameCounter % 10 == 0 && frameCounter >= 200)	// fast
-	 	{
+	 	else if(frameCounter % 10 == 0 && frameCounter >= 200) {	// fast
 	 		enemies.add(new Asteroid(line.getStart())); 
 	 		enemies.add(new Alien(line.getStart()));
 	 		enemies.add(new Comet(line.getStart()));
 	 	}
-	 	else if(frameCounter % 5 == 0 && frameCounter >= 250)	// fast
-	 	{
+	 	else if(frameCounter % 5 == 0 && frameCounter >= 250) {	    // fast
 	 		enemies.add(new Asteroid(line.getStart())); 
 	 		enemies.add(new Alien(line.getStart()));
 	 		enemies.add(new Comet(line.getStart()));
@@ -497,8 +520,7 @@ public class Game implements Runnable
     	}
     	
     	// moves tower object with mouse movements
-    	if(newBlackHole != null)
-    	{
+    	if(newBlackHole != null) {
     		newBlackHole.setPosition(mouseLocation);
     	}	
     }
@@ -533,8 +555,7 @@ public class Game implements Runnable
     	}
     	
     	// moves tower object with mouse movements
-    	if(newSun != null)
-    	{
+    	if(newSun != null) {
     		newSun.setPosition(mouseLocation);
     	}	
     }
