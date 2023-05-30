@@ -2,9 +2,9 @@ package entities.towers;
 
 import game.Game;
 import utilities.Coordinate;
-import entities.enemies.Enemy;
+import entities.ennemies.Enemy;
 import utilities.ImageLoader;
-import effects.MissileExplosion;
+import effects.StarDust;
 
 import java.util.List;
 
@@ -21,7 +21,6 @@ public class Missile extends Tower {
         this.position = pos;
         this.anchorX = -40;
         this.anchorY = -40;
-        this.cost = 60; // Set the cost of the Missile tower to 60
     }
 
     /**
@@ -35,7 +34,7 @@ public class Missile extends Tower {
             return;
         }
 
-        List<Enemy> enemies = game.getEnemies();
+        List<Enemy> enemies = game.enemies;
 
         for (Enemy e : enemies) {
             Coordinate enemyPos = e.getPosition().getCoordinate();
@@ -47,8 +46,8 @@ public class Missile extends Tower {
 
             // If the enemy is within range, attack
             if (dist < 80) {
-                MissileExplosion explosion = new MissileExplosion(pos, enemyPos);
-                game.getEffects().add(explosion);
+                StarDust stardust = new StarDust(pos, enemyPos);
+                game.effects.add(stardust);
                 timeSinceLastFire = 0;
                 return;
             }
