@@ -1,14 +1,12 @@
-package game;
-
-import game.effects.Effect;
-import game.entities.towers.Sun;
-import game.entities.towers.Tower;
-import game.utilities.*;
-import game.entities.ennemies.Alien;
-import game.entities.ennemies.Asteroid;
-import game.entities.ennemies.Comet;
-import game.entities.ennemies.Enemy;
-import game.entities.towers.BlackHole;
+import effects.Effect;
+import entities.towers.Sun;
+import entities.towers.Tower;
+import utilities.*;
+import entities.ennemies.Alien;
+import entities.ennemies.Asteroid;
+import entities.ennemies.Comet;
+import entities.ennemies.Enemy;
+import entities.towers.BlackHole;
 
 import java.awt.*;
 import java.io.InputStream;
@@ -112,8 +110,7 @@ public class Game implements Runnable
      * don't care, but we are aware that some other threads
      * do exist.)
      */
-    public Game ()
-    {
+    public Game () {
         // The game starts in the SETUP state.
         
         state = GameState.SETUP;
