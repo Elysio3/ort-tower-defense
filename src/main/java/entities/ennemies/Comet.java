@@ -13,7 +13,7 @@ public class Comet extends Enemy {
 	 */
 	public Comet(PathPosition p) {
 		ImageLoader loader = ImageLoader.getLoader();
-		this.enemy = loader.getImage("/main/resources/comet.png");
+		this.enemy = loader.getImage("comet.png");
 		this.position = p;
 		this.anchorX = -25;
 		this.anchorY = -25;

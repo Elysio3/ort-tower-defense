@@ -17,7 +17,7 @@ public class BlackHole extends Tower {
 	 */
 	public BlackHole(Coordinate pos) {
 		ImageLoader loader = ImageLoader.getLoader();
-		this.tower = loader.getImage("/main/resources/blackhole.png");
+		this.tower = loader.getImage("blackhole.png");
 		this.position = pos;
 		this.anchorX = -40;
 		this.anchorY = -40;

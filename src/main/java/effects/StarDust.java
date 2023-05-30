@@ -12,7 +12,7 @@ public class StarDust extends Effect
 	public StarDust(Coordinate pos, Coordinate target) {
 		// Loads star dust image
 		ImageLoader loader = ImageLoader.getLoader();
-		this.picture = loader.getImage("/main/resources/star_dust.png");
+		this.picture = loader.getImage("star_dust.png");
 		
 		// X and Y position of Effect
 		this.posX = pos.x;

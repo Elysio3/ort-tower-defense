@@ -13,7 +13,7 @@ public class Asteroid extends Enemy {
 	 */
 	public Asteroid(PathPosition p) {
 		ImageLoader loader = ImageLoader.getLoader();
-		this.enemy = loader.getImage("/main/resources/asteroid.png");
+		this.enemy = loader.getImage("asteroid.png");
 		this.position = p;
 		this.anchorX = -20;
 		this.anchorY = -20;

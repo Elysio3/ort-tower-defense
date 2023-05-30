@@ -17,7 +17,7 @@ public class Sun extends Tower {
 	 */
 	public Sun(Coordinate pos) {
 		ImageLoader loader = ImageLoader.getLoader();
-		this.tower = loader.getImage("/main/resources/sun.png");
+		this.tower = loader.getImage("sun.png");
 		this.position = pos;
 		this.anchorX = -50;
 		this.anchorY = -50;
