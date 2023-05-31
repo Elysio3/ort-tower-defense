@@ -409,7 +409,7 @@ public class Game implements Runnable
         g.fillRect(650, 550, 100, 100);
                 
         // draw tower missile in menu area
-        Missile missile = new Missile(new Coordinate(700, 615));
+        Missile missile = new Missile(new Coordinate(700, 600));
         missile.draw(g);
         
         // draw box around sun icon
@@ -532,7 +532,7 @@ public class Game implements Runnable
     	
     	// moves the tower object as mouse moves
     	if(gamePanel.mouseX > 650 && gamePanel.mouseX < 750 && 
-    		gamePanel.mouseY > 250 && gamePanel.mouseY < 350 && 
+    		gamePanel.mouseY > 550 && gamePanel.mouseY < 650 && 
     		gamePanel.mouseIsPressed && scoreCounter >= 60)
     	{	// if mouse is pressed on tower icon, create a new object
 	    		placingMissile = true;
