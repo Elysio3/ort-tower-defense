@@ -1,23 +1,25 @@
 package game;
 
 import effects.Effect;
-import entities.towers.Sun;
-import entities.towers.Tower;
-import utilities.*;
 import entities.ennemies.Alien;
 import entities.ennemies.Asteroid;
 import entities.ennemies.Comet;
 import entities.ennemies.Enemy;
 import entities.towers.BlackHole;
 import entities.towers.Missile;
-import entities.towers.Missile;
+import entities.towers.Sun;
+import entities.towers.Tower;
+import utilities.Coordinate;
+import utilities.GamePanel;
+import utilities.ImageLoader;
+import utilities.PathPoints;
+
+import javax.swing.*;
 import java.awt.*;
 import java.io.InputStream;
 import java.util.LinkedList;
-import java.util.Scanner;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import java.util.Scanner;
 
 /* The class begins below the enum. */
 
@@ -418,8 +420,6 @@ public class Game implements Runnable
         // draw tower missile in menu area
         Missile missile = new Missile(new Coordinate(700, 600));
         missile.draw(g);
-        Missile missile = new Missile(new Coordinate(700, 600));
-        missile.draw(g);
         
         // draw box around sun icon
         g.setColor(new Color(224, 224, 224));
@@ -534,7 +534,6 @@ public class Game implements Runnable
     }
 
     public void placeMissile() {
-    public void placeMissile() {
     	/* I need to make it so you can't place towers on path or off the screen */
     	
     	 // variable to hold mouse location
@@ -551,8 +550,7 @@ public class Game implements Runnable
 	    		newMissile = new Missile(mouseLocation);
     	}    
     	else if(gamePanel.mouseX > 0 && gamePanel.mouseX < 600 && 
-        	gamePanel.mouseY > 0 && gamePanel.mouseY < 600 && 
-        	gamePanel.mouseIsPressed && placingMissile
+        	gamePanel.mouseY > 0 && gamePanel.mouseY < 600 &&
         	gamePanel.mouseIsPressed && placingMissile
         	&& line.distanceToPath(gamePanel.mouseX, gamePanel.mouseY) > 60)
     	{	// if mouse is pressed on game screen, place tower on game screen
@@ -568,7 +566,6 @@ public class Game implements Runnable
     	}
     	
     	// moves tower object with mouse movements
-    	if(newMissile != null)
     	if(newMissile != null)
     	{
     		newMissile.setPosition(mouseLocation);
