@@ -16,13 +16,12 @@ import utilities.PathPoints;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+
 import static java.lang.Thread.sleep;
 
 /* The class begins below the enum. */
@@ -272,10 +271,6 @@ public class Game implements Runnable {
         // initialize
         placingMissile = false;
         newMissile = null;
-
-        // initialize
-        placingMissile = false;
-        newMissile = null;
         	
         // initialize
         gameIsOver = false;
@@ -344,7 +339,7 @@ public class Game implements Runnable {
         this.placeMissile();
     	
     	if(livesCounter <= 0) {
-            //gameIsOver = true;
+            gameIsOver = true;
     		livesCounter = 0;
     	}
     	
@@ -434,15 +429,6 @@ public class Game implements Runnable {
         // draw tower in menu area
         BlackHole blackhole = new BlackHole(new Coordinate(700, 300));
         blackhole.draw(g);
-
-        // draw box around missile icon
-        // draw box around missile icon
-        g.setColor(new Color(224, 224, 224));
-        g.fillRect(650, 550, 100, 100);
-                
-        // draw tower missile in menu area
-        Missile missile = new Missile(new Coordinate(700, 600));
-        missile.draw(g);
         
         // draw box around sun icon
         g.setColor(new Color(224, 224, 224));
@@ -451,19 +437,26 @@ public class Game implements Runnable {
         // draw tower in menu area
         Sun sun = new Sun(new Coordinate(700, 450));
         sun.draw(g);
+
+        // draw box around missile icon
+        g.setColor(new Color(224, 224, 224));
+        g.fillRect(650, 550, 100, 100);
+
+        // draw tower missile in menu area
+        Missile missile = new Missile(new Coordinate(700, 600));
+        missile.draw(g);
         
         // draws blackhole object with mouse movements
         if(newBlackHole != null)
         	newBlackHole.draw(g);
 
-       // draws Missile Towers object with mouse movements
-        if(newMissile != null)
-            newMissile.draw(g);
-    
-
         // draws sun object with mouse movements
         if(newSun != null)
         	newSun.draw(g);
+
+        // draws Missile Towers object with mouse movements
+        if(newMissile != null)
+            newMissile.draw(g);
         
         ImageLoader loader = ImageLoader.getLoader();	
 		Image endGame = loader.getImage("game_over.png"); // load game over image
@@ -471,10 +464,14 @@ public class Game implements Runnable {
         if(livesCounter <= 0)										// if game is lost
         	g.drawImage(endGame, 0, 0, null);						// draw "game over"
 
-		if(killsCounter >= 500) {								    // if game is lost
-            g.setFont(new Font("Braggadocio", Font.ITALIC, 90));
-        	g.drawString("You Win!!!", 10, 250);					// draw "game over"
-		}
+            if((Objects.equals(difficulty, "FACILE") && killsCounter >= 250) ||
+                    (Objects.equals(difficulty, "NORMAL") && killsCounter >= 500) ||
+                    (Objects.equals(difficulty, "DIFFICILE") && killsCounter >= 1000)) {
+                // if game is lost
+                g.setFont(new Font("Braggadocio", Font.ITALIC, 90));
+                g.drawString("You Win!!!", 10, 250);                    // draw "game over"
+            }
+
 		
         // Drawing is now complete.  Enter the WAIT state to create a small
         //   delay between frames.
@@ -517,36 +514,40 @@ public class Game implements Runnable {
     /**
      * Method for placing black holes on the screen
      */
+    /**
+     * Method for placing black holes on the screen
+     */
     public void placeBlackHoles() {
-    	/* I need to make it so you can't place towers on path or off the screen */
-    	
-    	 // variable to hold mouse location
-    	Coordinate mouseLocation = new Coordinate(gamePanel.mouseX, gamePanel.mouseY);
-    	
-    	// moves the tower object as mouse moves
-    	if(gamePanel.mouseX > 650 && gamePanel.mouseX < 750 && 
-    		gamePanel.mouseY > 250 && gamePanel.mouseY < 350 && 
-    		gamePanel.mouseIsPressed && scoreCounter >= 100)
-    	{	// if mouse is pressed on tower icon, create a new object
-	    		placingBlackHole = true;
-	    		newBlackHole = new BlackHole(mouseLocation);
-    	}    
-    	else if(gamePanel.mouseX > 0 && gamePanel.mouseX < 600 && 
-        	gamePanel.mouseY > 0 && gamePanel.mouseY < 600 && 
-        	gamePanel.mouseIsPressed && placingBlackHole
-        	&& line.distanceToPath(gamePanel.mouseX, gamePanel.mouseY) > 60)
-    	{	// if mouse is pressed on game screen, place tower on game screen
-	    		newBlackHole.setPosition(mouseLocation);
-	    		towers.add(new BlackHole(mouseLocation));
-	    		scoreCounter -= 100;
-	    		newBlackHole = null;
-	    		placingBlackHole = false;	
-    	}
-    	
-    	// moves tower object with mouse movements
-    	if(newBlackHole != null) {
-    		newBlackHole.setPosition(mouseLocation);
-    	}	
+        /* I need to make it so you can't place towers on path or off the screen */
+
+        // variable to hold mouse location
+        Coordinate mouseLocation = new Coordinate(gamePanel.mouseX, gamePanel.mouseY);
+
+        // moves the tower object as mouse moves
+        if(gamePanel.mouseX > 650 && gamePanel.mouseX < 750 &&
+                gamePanel.mouseY > 250 && gamePanel.mouseY < 350 &&
+                gamePanel.mouseIsPressed && scoreCounter >= 100)
+        {	// if mouse is pressed on tower icon, create a new object
+            placingBlackHole = true;
+            newBlackHole = new BlackHole(mouseLocation);
+        }
+        else if(gamePanel.mouseX > 0 && gamePanel.mouseX < 600 &&
+                gamePanel.mouseY > 0 && gamePanel.mouseY < 600 &&
+                gamePanel.mouseIsPressed && placingBlackHole
+                && line.distanceToPath(gamePanel.mouseX, gamePanel.mouseY) > 60)
+        {	// if mouse is pressed on game screen, place tower on game screen
+            newBlackHole.setPosition(mouseLocation);
+            towers.add(new BlackHole(mouseLocation));
+            scoreCounter -= 100;
+            newBlackHole = null;
+            placingBlackHole = false;
+        }
+
+        // moves tower object with mouse movements
+        if(newBlackHole != null)
+        {
+            newBlackHole.setPosition(mouseLocation);
+        }
     }
 
     public void placeMissile() {
@@ -562,8 +563,6 @@ public class Game implements Runnable {
     	{	// if mouse is pressed on tower icon, create a new object
 	    		placingMissile = true;
 	    		newMissile = new Missile(mouseLocation);
-	    		placingMissile = true;
-	    		newMissile = new Missile(mouseLocation);
     	}    
     	else if(gamePanel.mouseX > 0 && gamePanel.mouseX < 600 && 
         	gamePanel.mouseY > 0 && gamePanel.mouseY < 600 &&
@@ -572,11 +571,7 @@ public class Game implements Runnable {
     	{	// if mouse is pressed on game screen, place tower on game screen
 	    		newMissile.setPosition(mouseLocation);
 	    		towers.add(new Missile(mouseLocation));
-	    		newMissile.setPosition(mouseLocation);
-	    		towers.add(new Missile(mouseLocation));
 	    		scoreCounter -= 60;
-	    		newMissile = null;
-	    		placingMissile = false;	
 	    		newMissile = null;
 	    		placingMissile = false;	
     	}
@@ -585,7 +580,6 @@ public class Game implements Runnable {
     	if(newMissile != null)
     	{
     		newMissile.setPosition(mouseLocation);
-    		newMissile.setPosition(mouseLocation);
     	}	
     }
     
@@ -593,34 +587,35 @@ public class Game implements Runnable {
      * Method for placing suns on the screen
      */
     public void placeSuns() {
-    	/* I need to make it so you can't place towers on path or off the screen */
-    	
-    	 // variable to hold mouse location
-    	Coordinate mouseLocation = new Coordinate(gamePanel.mouseX, gamePanel.mouseY);
-    	
-    	// moves the tower object as mouse moves
-    	if(gamePanel.mouseX > 650 && gamePanel.mouseX < 750 && 
-    		gamePanel.mouseY > 400 && gamePanel.mouseY < 500 && 
-    		gamePanel.mouseIsPressed && scoreCounter >= 300)
-    	{	// if mouse is pressed on tower icon, create a new object
-	    		placingSun = true;
-	    		newSun = new Sun(mouseLocation);
-    	}    
-    	else if(gamePanel.mouseX > 0 && gamePanel.mouseX < 600 && 
-        	gamePanel.mouseY > 0 && gamePanel.mouseY < 600 && 
-        	gamePanel.mouseIsPressed && placingSun
-        	&& line.distanceToPath(gamePanel.mouseX, gamePanel.mouseY) > 60)
-    	{	// if mouse is pressed on game screen, place tower on game screen
-	    		newSun.setPosition(mouseLocation);
-	    		towers.add(new Sun(mouseLocation));
-	    		scoreCounter -= 300;
-	    		newSun = null;
-	    		placingSun = false;	
-    	}
-    	
-    	// moves tower object with mouse movements
-    	if(newSun != null) {
-    		newSun.setPosition(mouseLocation);
-    	}	
+        /* I need to make it so you can't place towers on path or off the screen */
+
+        // variable to hold mouse location
+        Coordinate mouseLocation = new Coordinate(gamePanel.mouseX, gamePanel.mouseY);
+
+        // moves the tower object as mouse moves
+        if(gamePanel.mouseX > 650 && gamePanel.mouseX < 750 &&
+                gamePanel.mouseY > 400 && gamePanel.mouseY < 500 &&
+                gamePanel.mouseIsPressed && scoreCounter >= 300)
+        {	// if mouse is pressed on tower icon, create a new object
+            placingSun = true;
+            newSun = new Sun(mouseLocation);
+        }
+        else if(gamePanel.mouseX > 0 && gamePanel.mouseX < 600 &&
+                gamePanel.mouseY > 0 && gamePanel.mouseY < 600 &&
+                gamePanel.mouseIsPressed && placingSun
+                && line.distanceToPath(gamePanel.mouseX, gamePanel.mouseY) > 60)
+        {	// if mouse is pressed on game screen, place tower on game screen
+            newSun.setPosition(mouseLocation);
+            towers.add(new Sun(mouseLocation));
+            scoreCounter -= 300;
+            newSun = null;
+            placingSun = false;
+        }
+
+        // moves tower object with mouse movements
+        if(newSun != null)
+        {
+            newSun.setPosition(mouseLocation);
+        }
     }
 }	
