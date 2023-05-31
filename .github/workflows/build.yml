@@ -19,5 +19,8 @@ jobs:
     - name: Build and Package
       run: mvn clean package
 
-    - name: Retrieve Artifact
+    - name: Finding Artifact
+      run : find / -name "*.jar" -type f -exec file {} \; | grep -i ".*:.*Java archive data.*"
+      
+    - name: Finding Artifact
       run: cp target/TowerDefense.jar ${{ github.workspace }}/TowerDefense.jar
