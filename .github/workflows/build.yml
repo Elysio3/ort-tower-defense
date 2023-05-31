@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types:
+      - closed
 
 jobs:
   build:
@@ -13,13 +16,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up JDK 11
+    - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
-        java-version: 11
+        java-version: 17
 
     - name: Build and Package
       run: mvn clean package
 
     - name: Retrieve Artifact
-      run: cp target/your-artifact.jar ${{ github.workspace }}/your-artifact.jar
+      run: cp target/TowerDefense.jar ${{ github.workspace }}/TowerDefense.jar
