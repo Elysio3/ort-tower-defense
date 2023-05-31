@@ -380,7 +380,7 @@ public class Game implements Runnable
     	
         // draw menu bar
         g.setColor(Color.WHITE);
-        g.fillRect(600, 0, 200, 600);
+        g.fillRect(800, 0, 200, 800);
         
         // draw score & life counters to menu bar
         g.setColor(Color.BLACK);
@@ -390,6 +390,7 @@ public class Game implements Runnable
         g.drawString("Enemies Stopped: " + killsCounter, 605, 200);
         g.drawString("Blackhole Cost: 100", 610, 380);				// cost for black hole towers
         g.drawString("Sun Cost: 300", 640, 530);					// cost for sun towers
+        g.drawString("Missile tower cost : 60", 610, 680);
         g.setFont(new Font("Lucidia Sans", Font.ITALIC, 28));		
         g.drawString("Planet Defense", 600, 50);					// writes title
         g.drawLine(600, 50, 800, 50);								// underscore
