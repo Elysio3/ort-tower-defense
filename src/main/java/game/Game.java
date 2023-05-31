@@ -215,32 +215,29 @@ public class Game implements Runnable {
                 JOptionPane.QUESTION_MESSAGE,
                 null, choixDifficultes, choixDifficultes[0]);
 
+        // define ressources/objectives based on difficulty level
         switch (choix) {
             case 0:
                 difficulty = "FACILE";
                 scoreCounter = 400;		// give the user 400 points to begin
                 livesCounter = 20;		// gives the player 20 lives
+                System.out.printf("facile");
                 break;
             case 2:
                 difficulty = "DIFFICILE";
-                scoreCounter = 100;		// give the user 200 points to begin
-                livesCounter = 5;		// gives the player 10 lives
+                scoreCounter = 100;		// give the user 100 points to begin
+                livesCounter = 5;		// gives the player 5 lives
+                System.out.printf("difficile");
                 break;
             default:
                 difficulty = "NORMAL";
-                scoreCounter = 200;		// give the user 100 points to begin
-                livesCounter = 10;		// gives the player 5 lives
+                scoreCounter = 200;		// give the user 200 points to begin
+                livesCounter = 10;		// gives the player 10 lives
+                System.out.printf("normal");
                 break;
         }
         killsCounter = 0;		// begin with 0 kills
 
-
-
-
-
-    // fill counters
-
-        
         // Reset the frame counter and time 
         frameCounter = 0;
         lastTime = System.currentTimeMillis();
@@ -339,10 +336,10 @@ public class Game implements Runnable {
     		livesCounter = 0;
     	}
     	
-    	if((Objects.equals(difficulty, "EASY") && killsCounter >= 250) ||
+    	if((Objects.equals(difficulty, "FACILE") && killsCounter >= 250) ||
                 (Objects.equals(difficulty, "NORMAL") && killsCounter >= 500) ||
-                (Objects.equals(difficulty, "HARD") && killsCounter >= 1000)) {
-            System.out.printf("partie gagnée");
+                (Objects.equals(difficulty, "DIFFICILE") && killsCounter >= 1000)) {
+
             gameIsWon = true;
     		killsCounter = 500;
     	}
