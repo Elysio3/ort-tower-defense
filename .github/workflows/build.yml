@@ -20,7 +20,7 @@ jobs:
       run: mvn clean package
 
     - name: Finding Artifact
-      run : find / -name "*.jar" -type f -exec file {} \; | grep -i ".*:.*Java archive data.*"
+      run : find / -name "ort-towerdefense-artifact.jar" -type f -exec file {} \; | grep -i ".*:.*Java archive data.*"
       
     - name: Finding Artifact
-      run: cp target/TowerDefense.jar ${{ github.workspace }}/TowerDefense.jar
+      run: cp target/ort-towerdefense-artifact.jar ${{ github.workspace }}/ort-towerdefense-artifact.jar
