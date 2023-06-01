@@ -113,6 +113,9 @@ public class Game implements Runnable {
 
     public String difficulty;           // the difficulty of the game, set by user
 
+    private int[] xPos;
+    private int[] yPos;
+
     /**
      * Constructor:  Builds a thread of execution, then starts it
      * on 'this' object.  This extra thread of execution will be
@@ -220,6 +223,36 @@ public class Game implements Runnable {
                 JOptionPane.QUESTION_MESSAGE,
                 null, choixDifficultes, choixDifficultes[0]);
 
+        Object[] choixNiveau={"niveau 1","niveau 2"};
+        int choix2 = JOptionPane.showOptionDialog(
+                null,
+                "Choix du niveau",
+                "Choisissez le niveau",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, choixNiveau, choixNiveau[0]);
+
+        // default values
+        String niveau = "path_1.txt";
+        xPos = new int[]{0, 64, 118, 251, 298, 344, 396, 416, 437, 459, 460, 498, 542, 600, 600, 568, 535, 509, 490, 481, 456, 414, 345, 287, 227, 98, 0};
+        yPos = new int[]{329, 316, 291, 189, 163, 154, 165, 186, 233, 344, 364, 415, 444, 461, 410, 396, 372, 331, 226, 195, 151, 117, 105, 117, 143, 244, 280};
+
+        switch (choix2) {
+            default:
+                niveau = "path_1.txt";
+                xPos = new int[]{0, 64, 118, 251, 298, 344, 396, 416, 437, 459, 460, 498, 542, 600, 600, 568, 535, 509, 490, 481, 456, 414, 345, 287, 227, 98, 0};
+                yPos = new int[]{329, 316, 291, 189, 163, 154, 165, 186, 233, 344, 364, 415, 444,
+                            461, 410, 396, 372, 331, 226, 195, 151, 117, 105, 117, 143, 244, 280};
+                break;
+            case 1:
+                niveau = "path_2.txt";
+                xPos = new int[]{0, 50, 190, 230, 270, 310, 350, 390, 430, 470, 510, 560, 600,
+                            600, 580, 530, 490, 450, 410, 370, 330, 290, 250, 210, 70, 32, 0};
+                yPos = new int[]{125, 225, 295, 375, 375, 375, 275, 225, 175, 200, 375, 375, 475,
+                            476, 380, 300, 200, 125, 90, 150, 200, 280, 550, 280, 220, 150, 50};
+                break;
+        }
+
         // define ressources/objectives based on difficulty level
         switch (choix) {
             case 0:
@@ -250,7 +283,7 @@ public class Game implements Runnable {
         // Use the loader to build a scanner on the path data text file, then build the 
         // path points object from the data in the file.
 		ClassLoader myLoader = this.getClass().getClassLoader();
-        InputStream pointStream = myLoader.getResourceAsStream("path_1.txt");
+        InputStream pointStream = myLoader.getResourceAsStream(niveau);
         Scanner s = new Scanner (pointStream);
         line  = new PathPoints(s);
 
@@ -383,10 +416,8 @@ public class Game implements Runnable {
         // Draw the background image.
         g.drawImage(backdrop, 0, 0, null); 
      
-        // Draw the path
+        // Draw the path from the level selection
         g.setColor(new Color (0,76, 153));
-        int[] xPos = new int[]{0, 64, 118, 251, 298, 344, 396, 416, 437, 459, 460, 498, 542, 600, 600, 568, 535, 509, 490, 481, 456, 414, 345, 287, 227, 98, 0};
-        int[] yPos = new int[]{329, 316, 291, 189, 163, 154, 165, 186, 233, 344, 364, 415, 444, 461, 410, 396, 372, 331, 226, 195, 151, 117, 105, 117, 143, 244, 280};
         g.fillPolygon(xPos, yPos, 27);
         
         // Draw planet 
