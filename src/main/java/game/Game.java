@@ -404,11 +404,12 @@ public class Game implements Runnable {
     		s.draw(g);
     	
         // draw menu bar
-        g.setColor(Color.WHITE);
-        g.fillRect(800, 0, 200, 800);
+        g.setColor(Color.BLACK);
+        g.fillRect(600, 0, 800, 800);
+        g.fillRect(0, 600, 800, 800);
         
         // draw score & life counters to menu bar
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.setFont(new Font("Lucidia Sans", Font.BOLD, 16));
         g.drawString("Lives Remaining: " + livesCounter, 605, 100);	// lives counter
         g.drawString("Money Earned: " + scoreCounter, 605, 150);	// score counter
