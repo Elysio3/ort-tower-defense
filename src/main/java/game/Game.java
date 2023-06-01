@@ -5,6 +5,7 @@ import entities.ennemies.Alien;
 import entities.ennemies.Asteroid;
 import entities.ennemies.Comet;
 import entities.ennemies.Enemy;
+import entities.ennemies.Boss;
 import entities.towers.BlackHole;
 import entities.towers.Missile;
 import entities.towers.Sun;
@@ -90,7 +91,9 @@ public class Game implements Runnable {
     private Tower newSun; 				// variable to hold new tower objects
     private boolean gameIsOver;			// indicates if game is lost
     private boolean gameIsWon;			// indicates if game is won
-    
+    private boolean bossEngaged;			// indicates if the boss is engaged
+    public boolean bossDefeated;		// indicates if the boss is deefeated
+
     int livesCounter; 					// counter for lives left
     public int scoreCounter;					// points the user earns
     public int killsCounter;					// number of enemies destroyed
@@ -275,6 +278,9 @@ public class Game implements Runnable {
         // initialize
         gameIsOver = false;
     	gameIsWon = false;
+
+        bossEngaged = false;
+        bossDefeated = false;
         
         // Change the game state to start the game.
         state = GameState.UPDATE;  // You could also enter the 'DRAW' state.
@@ -324,7 +330,6 @@ public class Game implements Runnable {
     			enemies.remove(e);	// add to list that has reached the end
     			livesCounter--;		// if they have reached the end, reduce lives
     		}
-
     	}
     	
         // Fill elements in an enemy list
@@ -347,8 +352,12 @@ public class Game implements Runnable {
                 (Objects.equals(difficulty, "NORMAL") && killsCounter >= 500) ||
                 (Objects.equals(difficulty, "DIFFICILE") && killsCounter >= 1000)) {
 
-            gameIsWon = true;
-    		killsCounter = 500;
+            bossEngaged = true;
+
+            if(bossDefeated) {
+                gameIsWon = true;
+                killsCounter = 500;
+            }
     	}
     	
         // After we have updated the objects in the game, we need to
@@ -486,35 +495,36 @@ public class Game implements Runnable {
      */
     public void generateEnemies() {
     	// adds enemies to list dependent on how many frames have passed
-    	if(frameCounter % 30 == 0) {							    // slow
-    		enemies.add(new Asteroid(line.getStart()));
-    	}
- 		else if(frameCounter % 25 == 0 && frameCounter >= 50) {	    // slow
- 			enemies.add(new Asteroid(line.getStart())); 
- 		}
-	 	else if(frameCounter % 20 == 0 && frameCounter >= 100) {    // medium
-	 		enemies.add(new Asteroid(line.getStart())); 
-	 		enemies.add(new Alien(line.getStart()));
-	 	}	
- 		else if(frameCounter % 15 == 0 && frameCounter >= 150) {	// medium
- 			enemies.add(new Asteroid(line.getStart())); 
- 			enemies.add(new Alien(line.getStart()));
- 		}
-	 	else if(frameCounter % 10 == 0 && frameCounter >= 200) {	// fast
-	 		enemies.add(new Asteroid(line.getStart())); 
-	 		enemies.add(new Alien(line.getStart()));
-	 		enemies.add(new Comet(line.getStart()));
-	 	}
-	 	else if(frameCounter % 5 == 0 && frameCounter >= 250) {	    // fast
-	 		enemies.add(new Asteroid(line.getStart())); 
-	 		enemies.add(new Alien(line.getStart()));
-	 		enemies.add(new Comet(line.getStart()));
-	 	}
+        if(bossEngaged) {
+            enemies.add(new Boss(line.getStart()));
+        } else {
+            if(frameCounter % 30 == 0) {							    // slow
+                enemies.add(new Asteroid(line.getStart()));
+            }
+            else if(frameCounter % 25 == 0 && frameCounter >= 50) {	    // slow
+                enemies.add(new Asteroid(line.getStart()));
+            }
+            else if(frameCounter % 20 == 0 && frameCounter >= 100) {    // medium
+                enemies.add(new Asteroid(line.getStart()));
+                enemies.add(new Alien(line.getStart()));
+            }
+            else if(frameCounter % 15 == 0 && frameCounter >= 150) {	// medium
+                enemies.add(new Asteroid(line.getStart()));
+                enemies.add(new Alien(line.getStart()));
+            }
+            else if(frameCounter % 10 == 0 && frameCounter >= 200) {	// fast
+                enemies.add(new Asteroid(line.getStart()));
+                enemies.add(new Alien(line.getStart()));
+                enemies.add(new Comet(line.getStart()));
+            }
+            else if(frameCounter % 5 == 0 && frameCounter >= 250) {	    // fast
+                enemies.add(new Asteroid(line.getStart()));
+                enemies.add(new Alien(line.getStart()));
+                enemies.add(new Comet(line.getStart()));
+            }
+        }
     }
-    
-    /**
-     * Method for placing black holes on the screen
-     */
+
     /**
      * Method for placing black holes on the screen
      */

@@ -1,5 +1,6 @@
 package effects;
 
+import entities.ennemies.Boss;
 import entities.ennemies.Enemy;
 
 import game.Game;
@@ -42,10 +43,20 @@ abstract public class Effect {
 			
 			//if enemy is in range of effect, destroy enemy
 			if(dist < 40)	
-			{	
-				game.enemies.remove(e);
-				game.scoreCounter += 3;
-				game.killsCounter += 1;
+			{
+				// if enemy is a boss
+				if(e instanceof Boss) {
+					if(((Boss) e).hit()) {
+						game.enemies.remove(e);
+						game.scoreCounter += 300;
+						game.killsCounter += 1;
+						game.bossDefeated = true;
+					}
+				} else {
+					game.enemies.remove(e);
+					game.scoreCounter += 3;
+					game.killsCounter += 1;
+				}
 			}
 		}
 	}
