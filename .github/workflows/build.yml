@@ -17,10 +17,5 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Build and Package
-      run: mvn clean package
+      run: ls
 
-    - name: Finding Artifact
-      run : find / -name "ort-towerdefense-artifact.jar" -type f
-      
-    - name: Finding Artifact
-      run: cp target/ort-towerdefense-artifact.jar ${{ github.workspace }}/ort-towerdefense-artifact.jar
