@@ -16,8 +16,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: tests
-      run: cd ..
+    - name: Building package
+      run: mvn clean package
     - name: tests
       run: ls
 
