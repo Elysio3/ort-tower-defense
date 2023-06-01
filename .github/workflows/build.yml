@@ -3,7 +3,7 @@ name: Build and Package
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     types:
       - closed
@@ -16,13 +16,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
-        java-version: 17
-
     - name: Build and Package
       run: mvn clean package
 
-    - name: Retrieve Artifact
-      run: cp target/TowerDefense.jar ${{ github.workspace }}/TowerDefense.jar
+    - name: Finding Artifact
+      run : find / -name "ort-towerdefense-artifact.jar" -type f
+      
+    - name: Finding Artifact
+      run: cp target/ort-towerdefense-artifact.jar ${{ github.workspace }}/ort-towerdefense-artifact.jar
