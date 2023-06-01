@@ -4,6 +4,7 @@ import game.Game;
 import utilities.Coordinate;
 import entities.ennemies.Enemy;
 import utilities.ImageLoader;
+import effects.ROCKETS;
 import effects.StarDust;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public class Missile extends Tower {
         ImageLoader loader = ImageLoader.getLoader();
         this.tower = loader.getImage("MissileTOWER.png");
         this.position = pos;
-        this.anchorX = -40;
-        this.anchorY = -40;
+        this.anchorX = -43;
+        this.anchorY = -37;
     }
 
     /**
@@ -46,8 +47,8 @@ public class Missile extends Tower {
 
             // If the enemy is within range, attack
             if (dist < 80) {
-                StarDust stardust = new StarDust(pos, enemyPos);
-                game.effects.add(stardust);
+                ROCKETS rockets = new ROCKETS(pos, enemyPos);
+                game.effects.add(rockets);
                 timeSinceLastFire = 0;
                 return;
             }
