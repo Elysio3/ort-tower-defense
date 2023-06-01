@@ -18,6 +18,6 @@ jobs:
 
     - name: Building package
       run: mvn clean package
-    - name: tests
-      run: ls
-
+    
+    - name: Retreiving Artifact
+      run: cp target/ort-towerdefense-artifact-1.0-SNAPSHOT.jar ${{ github.workspace }}/ort-towerdefense-artifact-1.0-SNAPSHOT.jar
