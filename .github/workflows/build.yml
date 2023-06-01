@@ -16,8 +16,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Building package
-      run: mvn clean package
-    
-    - name: Retreiving Artifact
-      run: cp target/ort-towerdefense-artifact-1.0-SNAPSHOT.jar ${{ github.workspace }}/ort-towerdefense-artifact-1.0-SNAPSHOT.jar
+    - run: mvn --batch-mode --update-snapshots verify
+    - run: mkdir staging && cp target/*.jar staging
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Package
+        path: staging
